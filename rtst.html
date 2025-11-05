@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Ticker Dashboard</title>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0f1115;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dashboard {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .card {
+    background-color: #1b1e24;
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  /* Watchlist */
+  .watchlist h3, .summary h3, .main h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+
+  .stock-item {
+    background: #121417;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .stock-item span {
+    display: block;
+  }
+
+  .green {
+    color: #2ecc71;
+  }
+  .red {
+    color: #e74c3c;
+  }
+
+  /* Center Section */
+  .main {
+    grid-column: 2;
+  }
+
+  .stock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .price {
+    font-size: 36px;
+    font-weight: bold;
+  }
+
+  canvas {
+    width: 100%;
+    height: 250px;
+  }
+
+  /* Market Summary */
+  .summary .index {
+    background: #121417;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+</style>
+</head>
+
+<body>
+  <div class="dashboard">
+
+    <!-- Left Watchlist -->
+    <div class="card watchlist">
+      <h3>My Watchlist</h3>
+      <div class="stock-item">
+        <span>AAPL</span>
+        <span class="green">$175.43 (+1.36%)</span>
+      </div>
+      <div class="stock-item">
+        <span>MSFT</span>
+        <span class="red">$378.91 (-0.38%)</span>
+      </div>
+      <div class="stock-item">
+        <span>GOOGL</span>
+        <span class="green">$139.50 (+0.64%)</span>
+      </div>
+      <div class="stock-item">
+        <span>TSLA</span>
+        <span class="red">$242.84 (-2.10%)</span>
+      </div>
+      <div class="stock-item">
+        <span>DIS</span>
+        <span>$100.00 (0.00%)</span>
+      </div>
+    </div>
+
+    <!-- Center Section -->
+    <div class="card main">
+      <div class="stock-header">
+        <h3>DIS - The Walt Disney Company</h3>
+        <button style="background:#292b31;color:white;padding:6px 12px;border:none;border-radius:6px;">Set Alert</button>
+      </div>
+
+      <div class="price">$100.00</div>
+      <p>Open: $98.00 &nbsp;&nbsp; High: $182.50 &nbsp;&nbsp; Low: $96.80 &nbsp;&nbsp; Volume: 52.3M</p>
+
+      <h4>DIS Price Chart</h4>
+      <canvas id="stockChart"></canvas>
+    </div>
+
+    <!-- Right Summary -->
+    <div class="card summary">
+      <h3>Market Summary</h3>
+      <div class="index"><strong>S&P 500:</strong> 4,567.18 <span class="green">(+0.52%)</span></div>
+      <div class="index"><strong>NASDAQ:</strong> 14,234.56 <span class="red">(-0.32%)</span></div>
+      <div class="index"><strong>DOW JONES:</strong> 35,678.90 <span class="green">(+0.41%)</span></div>
+      <div class="index"><strong>RUSSELL 2000:</strong> 1,876.34 <span class="red">(-0.66%)</span></div>
+    </div>
+
+  </div>
+
+  <script>
+    const ctx = document.getElementById('stockChart').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1D', '1W', '1M', '3M', '1Y'],
+        datasets: [{
+          label: 'DIS Price',
+          data: [172.5, 175, 178, 176, 180],
+          borderColor: '#e74c3c',
+          backgroundColor: 'rgba(231, 76, 60, 0.2)',
+          tension: 0.4,
+          fill: true,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#ccc' },
+            grid: { display: false }
+          },
+          y: {
+            ticks: { color: '#ccc' },
+            grid: { color: '#222' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
